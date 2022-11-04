@@ -224,9 +224,30 @@ function DeletarProduto(){
     index = index - 1
 }
 
-function CarrinhoDeCompras (id, quantidade) {
 
+
+function CarrinhoDeCompras (id, quantidade) {
+    var opcaoCarrinho = prompt("Digite uma opção para o carrinho: 1 - Adicionar produto, 2 - Excluir produto ou quantidade, 3 - Valor total ou 4 - Ver todos os itens e valor")
+
+    if(opcaoCarrinho == "1"){
+        var nomeProduto = prompt("Insira o nome do produto para adicionar ao carrinho:")
+        var quantidadeAdicionado = parseInt(prompt("Insira a quantidade do produto que deseja add ao carrinho:"))
+        AddProdutos(nomeProduto, quantidadeAdicionado)
+    } else if(opcaoCarrinho == "2"){
+        var nomeProduto = prompt ("Digite o nome do produto que deseja excluir do carrinho.")
+        var quantidadeExcluido = parseInt(prompt("Digite a quantidade que deseja excluir do produto do carrinho."))
+        ExcluirProdutoCarrinho(nomeProduto, quantidadeExcluido)
+        console.log("Produto excluido do carrinho com sucesso!")
+    } else if(opcaoCarrinho == "3"){
+        ValorTotal()
+    } else if(opcaoCarrinho == "4"){
+        ExibirTudoDoCarrinho()
+    } else {
+        console.log("Opção incorreta, digite novamente!")
+    }
 }
+
+
 
 var QuantidadeCarrinho = []
 var nomesCarrinho = []
@@ -234,17 +255,19 @@ var PrecosCarrinho = []
 var QuantidadeSup = []
  
 function AddProdutos(nomeProduto, quantidadeAdicionado) {
-    var nomeProduto = prompt("Insira o nome do produto para adicionar ao carrinho:")
-    var quantidadeAdicionado = parseInt(prompt("Insira a quantidade do produto que deseja add ao carrinho:"))
 
     for (var index = 0; index < nomesCarrinho.length; index++) {
         if(nomeProduto == nomesCarrinho[index]){
             QuantidadeCarrinho[index] = QuantidadeCarrinho[index] + quantidadeAdicionado
+            PrecosCarrinho[index] = precos[index]
+            
         } else {
             nomesCarrinho[index] = nomeProduto
             QuantidadeCarrinho[index] = quantidadeAdicionado
+
         }      
     }
+    console.log("Produto adicionado ao carrinho com sucesso!")
 }
 
 function ExcluirProdutoCarrinho(nomeProduto, quantidadeExcluido){
@@ -252,9 +275,6 @@ function ExcluirProdutoCarrinho(nomeProduto, quantidadeExcluido){
     nomeSup = []
     precoSup = []
     QuantidadeSup = []
-
-    var nomeProduto = prompt ("Digite o nome do produto que deseja excluir do carrinho.")
-    var quantidadeExcluido = parseInt(prompt("Digite a quantidade que deseja excluir do produto do carrinho."))
 
     for (var index = 0; index < nomesCarrinho.length; index++) {
         if(nomeProduto == nomesCarrinho[index] && quantidadeExcluido == QuantidadeCarrinho[index]){
@@ -282,18 +302,28 @@ function ExcluirProdutoCarrinho(nomeProduto, quantidadeExcluido){
     indexSup = 0
 }
 
+function ValorTotal() {
 
+    var valorTotalCarrinho = 0
 
+    for (var index = 0; index < nomesCarrinho.length; index++) {
+        valorTotalCarrinho = valorTotalCarrinho + PrecosCarrinho[index]
+    }
 
+    console.log("Valor total dos itens do carrinho: " + valorTotalCarrinho)
 
+    return valorTotalCarrinho
+}
 
-
-
+function ExibirTudoDoCarrinho() {
+    console.log("Todos os itens do carrinho são: " + nomesCarrinho)
+    console.log("Valor total de todos os produtos: " + ValorTotal())
+}
 
 var continuar = true
 
 while(continuar){
-    var opcao = prompt("Insira a opção que deseja executar: 1 - Cadastro, 2 - Buscar por ID, 3 - Buscar por nome, 4 - Ordenar por ID, 5 - Ordenar por preço, 6 - Ordenar por avaliação, 7 - Atualizar preço, 8 - Deletar produto")
+    var opcao = prompt("Insira a opção que deseja executar: 1 - Cadastro, 2 - Buscar por ID, 3 - Buscar por nome, 4 - Ordenar por ID, 5 - Ordenar por preço, 6 - Ordenar por avaliação, 7 - Atualizar preço, 8 - Deletar produto, 9 - Carrinho")
 
     if(opcao == "1"){
         CadastrarProduto()
@@ -318,6 +348,9 @@ while(continuar){
     }else if (opcao == "8") {
         DeletarProduto()
         console.log("Produto deletado com sucesso.")
+    } else if (opcao == "9") {
+        CarrinhoDeCompras()
+        
     } else {
         console.log("Opção inválida!")
     }
