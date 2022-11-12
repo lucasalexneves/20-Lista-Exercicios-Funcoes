@@ -259,7 +259,6 @@ function AddProdutos(nomeProduto, quantidadeAdicionado) {
     for (var index = 0; index < nomesCarrinho.length; index++) {
         if(nomeProduto == nomesCarrinho[index]){
             QuantidadeCarrinho[index] = QuantidadeCarrinho[index] + quantidadeAdicionado
-            PrecosCarrinho[index] = precos[index]
             
         } else {
             nomesCarrinho[index] = nomeProduto
@@ -279,7 +278,7 @@ function ExcluirProdutoCarrinho(nomeProduto, quantidadeExcluido){
     for (var index = 0; index < nomesCarrinho.length; index++) {
         if(nomeProduto == nomesCarrinho[index] && quantidadeExcluido == QuantidadeCarrinho[index]){
             QuantidadeCarrinho[index] = 0
-            nomesCarrinho[index] = ''
+            nomesCarrinho[index] = 0
         } else if(nomeProduto == nomesCarrinho[index] && quantidadeExcluido < QuantidadeCarrinho[index]){
             QuantidadeCarrinho[index] = QuantidadeCarrinho[index] - quantidadeExcluido
         } else {
@@ -307,7 +306,7 @@ function ValorTotal() {
     var valorTotalCarrinho = 0
 
     for (var index = 0; index < nomesCarrinho.length; index++) {
-        valorTotalCarrinho = valorTotalCarrinho + PrecosCarrinho[index]
+        valorTotalCarrinho = valorTotalCarrinho + (PrecosCarrinho[index] * quantidadeAdicionado[index])
     }
 
     console.log("Valor total dos itens do carrinho: " + valorTotalCarrinho)
@@ -317,7 +316,7 @@ function ValorTotal() {
 
 function ExibirTudoDoCarrinho() {
     console.log("Todos os itens do carrinho são: " + nomesCarrinho)
-    console.log("Valor total de todos os produtos: " + ValorTotal())
+    console.log("Valor total de todos os produtos: " + valorTotalCarrinho)
 }
 
 var continuar = true
@@ -349,7 +348,7 @@ while(continuar){
         DeletarProduto()
         console.log("Produto deletado com sucesso.")
     } else if (opcao == "9") {
-        CarrinhoDeCompras()
+        CarrinhoDeCompras(ids, QuantidadeCarrinho)
         
     } else {
         console.log("Opção inválida!")
